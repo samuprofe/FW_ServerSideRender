@@ -17,7 +17,6 @@ Este proyecto se centra en la parte del servidor para la generación de contenid
 | **Java** | Lógica principal de servidor, controladores, acceso a datos y generación de vistas. | 54.7% | **Alto peso en la lógica del servidor (Backend).** |
 | **HTML** | Plantillas de vista que son renderizadas por el servidor. | 45.3% | Se utiliza como lenguaje de plantilla (ej. Thymeleaf, JSP) para SSR. |
 | **Apache Maven** | Gestión de dependencias y ciclo de vida de la construcción. | (Configuración) | Herramienta estándar para proyectos Java. |
-| **CSS / JavaScript** | (Asumido) Estilado y pequeñas interacciones del lado del cliente. | (No visible en la estructura principal) | Uso mínimo en comparación con CSR. |
 
 ***
 
@@ -38,13 +37,25 @@ Asegúrate de tener instalado lo siguiente:
 1.  **Clona el repositorio desde IntelliJ:** Utiliza la opción de clonar el proyecto desde la URL de GitHub dentro de IntelliJ.
 
 2.  **Ejecuta la aplicación desde IntelliJ:**
-    * Una vez que el proyecto se haya indexado y resuelto las dependencias de Maven, busca la clase principal (típicamente la que contiene el método `main` y la anotación `@SpringBootApplication` si usa Spring Boot) y ejecútala.
+    * Una vez que el proyecto se haya indexado y resuelto las dependencias de Maven, busca la clase principal y ejecútala.
 
 3.  **Accede a la aplicación:**
-    Una vez que el servidor inicie, la aplicación web (la vista generada por el servidor) estará disponible en la URL:
+    Una vez que el servidor inicie, accede a la URL base de los mensajes:
     `http://localhost:8080/mensajes`
 
-    > **Nota:** En un proyecto de Server-Side Rendering (SSR), el archivo `.html` no se debe abrir directamente en el navegador desde el explorador de archivos; la aplicación debe ser accedida a través de la URL del servidor web (`http://localhost:8080/mensajes`).
+***
+
+## 🔄 Endpoints (Rutas del Servidor)
+
+El controlador principal de la aplicación (`MensajeController`) mapea las siguientes rutas para implementar las operaciones CRUD sobre la entidad Mensaje.
+
+| Método HTTP | Ruta Base | Propósito | Operación CRUD |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/mensajes` | Muestra la lista completa de mensajes. (Página principal). | **Read** (Listar) |
+| **GET** | `/mensajes/crear` | Muestra el formulario vacío para la creación de un nuevo mensaje. | **Create** (Formulario) |
+| **POST** | `/mensajes/guardar` | Procesa el envío del formulario para crear un nuevo mensaje o actualizar uno existente. | **Create / Update** |
+| **GET** | `/mensajes/{id}` | Muestra el formulario para editar un mensaje existente, cargando los datos del `{id}`. | **Read** (Individual) |
+| **GET** | `/mensajes/eliminar/{id}` | Elimina el mensaje con el `{id}` especificado y redirige a la lista. | **Delete** |
 
 ***
 
@@ -53,10 +64,10 @@ Asegúrate de tener instalado lo siguiente:
 La estructura del proyecto es típica de una aplicación basada en Java y Maven con arquitectura de Renderizado del Lado del Servidor (SSR/MVC):
 
 * **`src/main/java/`**: Contiene todo el código fuente de **Java** (controladores, servicios, modelos). Aquí reside la lógica principal que se encarga de recibir peticiones, procesar datos (CRUD) y seleccionar la vista a renderizar.
-* **`src/main/resources/`**:
-    * Contiene archivos de configuración y propiedades.
-    * Aquí se encuentran las **Plantillas de Vista** (ej. archivos `.html` con lógica de plantilla como Thymeleaf), que son procesadas por el servidor para generar el HTML final.
+* **`src/main/resources/`**: Aquí se encuentran las **Plantillas de Vista** (ej. archivos `.html` con lógica de plantilla), que son procesadas por el servidor para generar el HTML final.
 * **`pom.xml`**: Define el proyecto, las dependencias de Maven y los plugins de construcción y ejecución.
+
+***
 
 ## 📄 Licencia
 
@@ -68,6 +79,7 @@ Este proyecto está distribuido bajo la licencia **Creative Commons Atribución-
 **Pero debes:**
 1.  **Dar atribución** al autor original.
 2.  **No usar** el material con fines **comerciales**.
+
 ***
 
 ## 👤 Autor
